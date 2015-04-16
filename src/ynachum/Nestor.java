@@ -1,14 +1,13 @@
 package ynachum;
 
-import heineman.Klondike;
+import ks.common.controller.SolitaireMouseMotionAdapter;
 import ks.common.games.Solitaire;
+import ks.common.games.SolitaireUndoAdapter;
 import ks.common.model.Column;
 import ks.common.model.Deck;
 import ks.common.model.Pile;
-import ks.common.view.BuildablePileView;
 import ks.common.view.CardImages;
 import ks.common.view.ColumnView;
-import ks.common.view.DeckView;
 import ks.common.view.IntegerView;
 import ks.common.view.PileView;
 import ks.launcher.Main;
@@ -25,75 +24,107 @@ public class Nestor extends Solitaire {
 	IntegerView numLeftView;
 	
 	
+	/* (non-Javadoc)
+	 * @see ks.common.games.Solitaire#getName()
+	 * 
+	 * Returns the variation of the solitaire game.
+	 */
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
 		return "ynachum_Nestor";
 	}
 
+	/* (non-Javadoc)
+	 * @see ks.common.games.Solitaire#hasWon()
+	 * 
+	 * Returns whether or not the game has been won.
+	 */
 	@Override
 	public boolean hasWon() {
-		// TODO Auto-generated method stub
+		if(this.numLeft.getValue() <= 0){
+			return true;
+		}
 		return false;
 	}
 
+	/* (non-Javadoc)
+	 * @see ks.common.games.Solitaire#initialize()
+	 * 
+	 * Initializes the game so it can be played.
+	 */
 	@Override
 	public void initialize() {
 		// initialize model
 		initializeModel(getSeed());
 		initializeView();
 		initializeControllers();
-
-		// prepare game by dealing facedown cards to all columns, then one face up
-		/*for (int pileNum=1; pileNum <= 7; pileNum++) {
-			for (int num = 2; num <= pileNum; num++) {
-				Card c = deck.get();
-
-				c.setFaceUp (false);
-				piles[pileNum].add (c);
-			}
-
-			// This one is face up.
-			piles[pileNum].add (deck.get());
-		}*/
 	}
 
+	/**
+	 * Initializes the controllers to their respective boundaries.
+	 */
 	private void initializeControllers() {
-		// TODO Auto-generated method stub
+		// Initialize column controllers
+		for(ColumnView c: columnViews){
+			c.setMouseAdapter(new ColumnController(this, c));
+			c.setMouseMotionAdapter(new SolitaireMouseMotionAdapter(this));
+			c.setUndoAdapter(new SolitaireUndoAdapter(this));
+		}
 		
+		// Initialize reserve controllers
+		for(PileView p: pileViews){
+			p.setMouseAdapter(new ReserveController(this, p));
+			p.setMouseMotionAdapter(new SolitaireMouseMotionAdapter(this));
+			p.setUndoAdapter(new SolitaireUndoAdapter(this));
+		}
 	}
 
+	/**
+	 * Initializes the boundaries with their respective entities
+	 */
 	private void initializeView() {
 		CardImages ci = getCardImages();
 
+		// Initialize columns boundaries
 		for(int i = 0; i < columnViews.length; i++){
 			columnViews[i] = new ColumnView (columns[i]);
 			columnViews[i].setBounds (20*(i+1)+(i*ci.getWidth()),20, ci.getWidth(), ci.getHeight()+6*ci.getOverlap());
 			container.addWidget (columnViews[i]);
 		}
 		
+		// Initialize reserve boundaries
 		for(int i = 0; i < pileViews.length; i++){
 			pileViews[i] = new PileView (reserves[i]);
 			pileViews[i].setBounds (20*(i+1)+(i*ci.getWidth())+((20+ci.getWidth())*2),20+ci.getHeight()+ci.getOverlap()*6, ci.getWidth(), ci.getHeight());
 			container.addWidget (pileViews[i]);
 		}
 		
+		// Initialize score count boundary
 		scoreView = new IntegerView (getScore());
 		scoreView.setFontSize (14);
 		scoreView.setBounds (20*5+5*ci.getWidth(), 500, 100, 60);
 		container.addWidget (scoreView);
 
+		// Initialize cards left count boundary
 		numLeftView = new IntegerView (getNumLeft());
 		numLeftView.setFontSize (14);
 		numLeftView.setBounds (20*7+7*ci.getWidth(), 500, 100, 60);
 		container.addWidget (numLeftView);
 	}
 
+	/**
+	 * Initialize entities
+	 * 
+	 * @param seed
+	 */
 	private void initializeModel(int seed) {
+		// Initialize deck
 		deck = new Deck("deck");
 		deck.create(seed);;
 		model.addElement(deck);
 		
+		// Initialize columns with cards from deck
 		for(int i = 0; i < columns.length; i++){
 			columns[i] = new Column("column" + i);
 			
@@ -102,11 +133,13 @@ public class Nestor extends Solitaire {
 			}
 		}
 		
+		// Initialize reserves with remaining cards from deck
 		for(int i = 0; i < reserves.length; i++){
 			reserves[i] = new Pile("reserve" + i);
 			reserves[i].add(deck.get());
 		}
 		
+		// Update cards and score to initial states
 		updateNumberCardsLeft(52);
 		updateScore(0);
 	}
