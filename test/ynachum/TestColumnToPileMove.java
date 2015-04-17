@@ -7,16 +7,16 @@ import ks.common.model.Deck;
 import ks.common.model.Move;
 import ks.launcher.Main;
 
-public class TestPileToColumnMove extends TestCase{
+public class TestColumnToPileMove extends TestCase{
 
-	public void testValidPileToColumnMove() {
+	public void testValidColumnToPileMove() {
 		Nestor nestor = new Nestor();
 		GameWindow gw = Main.generateWindow(nestor, Deck.OrderBySuit);
 		
-		Card card1 = nestor.columns[3].peek();	// will be a 3 of hearts
-		Card card2 = nestor.reserves[1].get(); // will be a 3 of clubs
+		Card card1 = nestor.columns[3].get();	// will be a 3 of hearts
+		Card card2 = nestor.reserves[1].peek(); // will be a 3 of clubs
 		
-		PileToColumnMove move = new PileToColumnMove(nestor.reserves[1], card2, nestor.columns[3]);
+		ColumnToPileMove move = new ColumnToPileMove(nestor.columns[3], card1, nestor.reserves[1]);
 		
 		// check that valid move works
 		assertEquals(card1.getRank() == card2.getRank(), move.valid(nestor));
@@ -34,14 +34,14 @@ public class TestPileToColumnMove extends TestCase{
 		assertEquals(nestor.reserves[1].peek().getRank(), 3);
 	}
 	
-	public void testInvalidPileToColumnMove() {
+	public void testInvalidColumnToPileMove() {
 		Nestor nestor = new Nestor();
 		GameWindow gw = Main.generateWindow(nestor, Deck.OrderBySuit);
 		
-		Card card1 = nestor.columns[2].peek(); // will be a 9 of hearts
-		Card card2 = nestor.reserves[1].get(); // will be a 3 of clubs
+		Card card1 = nestor.columns[2].get(); // will be a 9 of hearts
+		Card card2 = nestor.reserves[1].peek(); // will be a 3 of clubs
 		
-		PileToColumnMove move = new PileToColumnMove(nestor.reserves[1], card2, nestor.columns[2]);
+		ColumnToPileMove move = new ColumnToPileMove(nestor.columns[2], card1, nestor.reserves[1]);
 		
 		assertEquals(card1.getRank() == card2.getRank(), move.valid(nestor));
 	

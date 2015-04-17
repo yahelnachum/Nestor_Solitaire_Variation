@@ -34,6 +34,7 @@ public class ColumnToColumnMove extends Move{
 			game.updateScore(2);
 			return true;
 		}
+		sourceColumn.add(sourceCard);
 		return false;
 	}
 	@Override

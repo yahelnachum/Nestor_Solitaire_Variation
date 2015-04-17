@@ -25,6 +25,12 @@ public class TestPileToPileMove extends TestCase{
 		// check that doMove works
 		assertEquals(nestor.reserves[0].count(), 0);
 		assertEquals(nestor.reserves[1].count(), 0);
+		
+		move.undo(nestor);
+		
+		// check that undo works
+		assertEquals(nestor.reserves[0].peek().getRank(), 1);
+		assertEquals(nestor.reserves[1].peek().getRank(), 1);
 	}
 	
 	public void testInvalidPileToPileMove() {
