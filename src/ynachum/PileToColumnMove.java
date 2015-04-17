@@ -51,7 +51,7 @@ public class PileToColumnMove extends Move{
 	@Override
 	public boolean valid(Solitaire game) {
 		// if the cards are of the same rank then it is a valid move
-		if(sourceCard.getRank() == targetColumn.peek().getRank()){
+		if(targetColumn.peek() != null && sourceCard.getRank() == targetColumn.peek().getRank()){
 			return true;
 		}
 		return false;

@@ -53,5 +53,21 @@ public class TestColumnToColumnMove extends TestCase{
 		assertEquals(nestor.columns[0].peek().getRank(), 8);
 		assertEquals(nestor.columns[1].peek().getRank(), 2);
 	}
+	
+	public void testInvalidColumnToSameColumnMove() {
+		Nestor nestor = new Nestor();
+		GameWindow gw = Main.generateWindow(nestor, Deck.OrderBySuit);
+		
+		Card card2 = nestor.columns[1].get();  // will be a 2 of spades
+		
+		ColumnToColumnMove move = new ColumnToColumnMove(nestor.columns[1], card2, nestor.columns[1]);
+		
+		assertFalse(move.valid(nestor));
+	
+		move.doMove(nestor);
+		
+		// check that doMove works as intended
+		assertEquals(nestor.columns[1].peek().getRank(), 2);
+	}
 
 }

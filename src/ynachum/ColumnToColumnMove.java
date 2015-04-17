@@ -34,9 +34,7 @@ public class ColumnToColumnMove extends Move{
 			game.updateScore(2);
 			return true;
 		}
-		else if(sourceColumn.getName() != targetColumn.getName()){
-			sourceColumn.add(sourceCard);
-		}
+		sourceColumn.add(sourceCard);
 		return false;
 	}
 	@Override
@@ -51,7 +49,7 @@ public class ColumnToColumnMove extends Move{
 	@Override
 	public boolean valid(Solitaire game) {
 		// if the cards have the same rank then the move is valid
-		if(sourceCard.getRank() == targetColumn.peek().getRank()){
+		if(targetColumn.peek() != null && sourceCard.getRank() == targetColumn.peek().getRank()){
 			return true;
 		}
 		return false;

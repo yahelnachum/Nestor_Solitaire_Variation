@@ -6,8 +6,11 @@ import ks.common.model.Card;
 import ks.common.model.Deck;
 import ks.launcher.Main;
 
+import org.junit.Test;
+
 public class TestPileToPileMove extends TestCase{
 
+	@Test
 	public void testValidPileToPileMove() {
 		Nestor nestor = new Nestor();
 		GameWindow gw = Main.generateWindow(nestor, Deck.OrderByRank);
@@ -33,6 +36,7 @@ public class TestPileToPileMove extends TestCase{
 		assertEquals(nestor.reserves[1].peek().getRank(), 1);
 	}
 	
+	@Test
 	public void testInvalidPileToPileMove() {
 		Nestor nestor = new Nestor();
 		GameWindow gw = Main.generateWindow(nestor, Deck.OrderBySuit);
@@ -48,6 +52,23 @@ public class TestPileToPileMove extends TestCase{
 		
 		// check that doMove works as intended
 		assertEquals(nestor.reserves[0].peek().getRank(), 4);
+		assertEquals(nestor.reserves[1].peek().getRank(), 3);
+	}
+	
+	@Test
+	public void testInvalidPileToSamePileMove() {
+		Nestor nestor = new Nestor();
+		GameWindow gw = Main.generateWindow(nestor, Deck.OrderBySuit);
+		
+		Card card2 = nestor.reserves[1].get();  // will be a 3 of clubs
+		
+		PileToPileMove move = new PileToPileMove(nestor.reserves[1], card2, nestor.reserves[1]);
+		
+		assertFalse(move.valid(nestor));
+	
+		move.doMove(nestor);
+		
+		// check that doMove works as intended
 		assertEquals(nestor.reserves[1].peek().getRank(), 3);
 	}
 
