@@ -28,14 +28,11 @@ public class TestReserveController extends TestCase{
 	public void testValidColumnController() throws AWTException, InterruptedException{
 		// make move
 		Robot bot = new Robot();
-	    Thread.sleep(sleepTime);
+		bot.setAutoDelay(sleepTime);
 	    bot.mouseMove(350, 400);    
 	    bot.mousePress(InputEvent.BUTTON1_MASK);
-	    Thread.sleep(sleepTime);
 	    bot.mouseMove(450, 400);
-	    Thread.sleep(sleepTime);
 	    bot.mouseRelease(InputEvent.BUTTON1_MASK);
-	    Thread.sleep(sleepTime);
 	    
 	    // validate that move works as intended
 	    assertEquals(nestor.reserves[1].count(), 0);
@@ -46,14 +43,11 @@ public class TestReserveController extends TestCase{
 	public void testInvalidColumnController() throws AWTException, InterruptedException{
 		// make move
 		Robot bot = new Robot();
-	    Thread.sleep(sleepTime);
+		bot.setAutoDelay(sleepTime);
 	    bot.mouseMove(350, 400);    
 	    bot.mousePress(InputEvent.BUTTON1_MASK);
-	    Thread.sleep(sleepTime);
 	    bot.mouseMove(350, 250);
-	    Thread.sleep(sleepTime);
 	    bot.mouseRelease(InputEvent.BUTTON1_MASK);
-	    Thread.sleep(sleepTime);
 	    
 	    // validate that move works as intended
 	    assertEquals(nestor.columns[3].peek().getRank(), 8);
