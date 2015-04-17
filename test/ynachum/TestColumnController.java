@@ -31,7 +31,7 @@ public class TestColumnController extends TestCase{
 		bot.setAutoDelay(sleepTime);
 	    bot.mouseMove(350, 250);    
 	    bot.mousePress(InputEvent.BUTTON1_MASK);
-	    bot.mouseMove(350, 400);
+	    RobotDrag.robotDragMouse(bot, 350, 250, 350, 400, sleepTime, 50, sleepTime);
 	    bot.mouseRelease(InputEvent.BUTTON1_MASK);
 	    
 	    // validate that move works as intended
@@ -46,6 +46,7 @@ public class TestColumnController extends TestCase{
 		bot.setAutoDelay(sleepTime);
 	    bot.mouseMove(350, 250);    
 	    bot.mousePress(InputEvent.BUTTON1_MASK);
+	    RobotDrag.robotDragMouse(bot, 350, 250, 450, 250, sleepTime, 50, sleepTime);
 	    bot.mouseMove(450, 250);
 	    bot.mouseRelease(InputEvent.BUTTON1_MASK);
 

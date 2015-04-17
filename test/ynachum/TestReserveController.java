@@ -31,6 +31,7 @@ public class TestReserveController extends TestCase{
 		bot.setAutoDelay(sleepTime);
 	    bot.mouseMove(350, 400);    
 	    bot.mousePress(InputEvent.BUTTON1_MASK);
+	    RobotDrag.robotDragMouse(bot, 350, 400, 450, 400, sleepTime, 50, sleepTime);
 	    bot.mouseMove(450, 400);
 	    bot.mouseRelease(InputEvent.BUTTON1_MASK);
 	    
@@ -46,6 +47,7 @@ public class TestReserveController extends TestCase{
 		bot.setAutoDelay(sleepTime);
 	    bot.mouseMove(350, 400);    
 	    bot.mousePress(InputEvent.BUTTON1_MASK);
+	    RobotDrag.robotDragMouse(bot, 350, 400, 350, 250, sleepTime, 50, sleepTime);
 	    bot.mouseMove(350, 250);
 	    bot.mouseRelease(InputEvent.BUTTON1_MASK);
 	    
