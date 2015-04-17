@@ -117,10 +117,6 @@ public class ColumnController extends SolitaireReleasedAdapter {
 				theGame.pushMove(move);
 				theGame.refreshWidgets();
 			}
-			else{
-				// return the card to source column if move is invalid
-				fromWidget.returnWidget(w);
-			}
 		}
 		// else if the source was a reserve then make a pile to column move
 		else{
@@ -131,10 +127,6 @@ public class ColumnController extends SolitaireReleasedAdapter {
 			if(move.doMove(theGame)){
 				theGame.pushMove(move);
 				theGame.refreshWidgets();
-			}
-			else{
-				// return the card to source pile if move is invalid
-				fromWidget.returnWidget(w);
 			}
 		}
 		

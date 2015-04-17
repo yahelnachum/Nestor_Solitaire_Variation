@@ -21,7 +21,7 @@ public class TestColumnToColumnMove extends TestCase{
 		ColumnToColumnMove move = new ColumnToColumnMove(nestor.columns[5], card2, nestor.columns[3]);
 		
 		// check that valid move works
-		assertEquals(card1.getRank() == card2.getRank(), move.valid(nestor));
+		assertTrue(move.valid(nestor));
 		
 		move.doMove(nestor);
 		
@@ -45,7 +45,7 @@ public class TestColumnToColumnMove extends TestCase{
 		
 		ColumnToColumnMove move = new ColumnToColumnMove(nestor.columns[1], card2, nestor.columns[0]);
 		
-		assertEquals(card1.getRank() == card2.getRank(), move.valid(nestor));
+		assertFalse(move.valid(nestor));
 	
 		move.doMove(nestor);
 		

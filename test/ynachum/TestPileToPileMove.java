@@ -18,7 +18,7 @@ public class TestPileToPileMove extends TestCase{
 		PileToPileMove move = new PileToPileMove(nestor.reserves[1], card2, nestor.reserves[0]);
 		
 		// check that valid move works
-		assertEquals(card1.getRank() == card2.getRank(), move.valid(nestor));
+		assertTrue(move.valid(nestor));
 		
 		move.doMove(nestor);
 		
@@ -42,7 +42,7 @@ public class TestPileToPileMove extends TestCase{
 		
 		PileToPileMove move = new PileToPileMove(nestor.reserves[1], card2, nestor.reserves[0]);
 		
-		assertEquals(card1.getRank() == card2.getRank(), move.valid(nestor));
+		assertFalse(move.valid(nestor));
 	
 		move.doMove(nestor);
 		

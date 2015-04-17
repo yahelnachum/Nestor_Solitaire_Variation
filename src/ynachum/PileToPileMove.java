@@ -35,8 +35,9 @@ public class PileToPileMove extends Move{
 			game.updateScore(2);
 			return true;
 		}
-		
-		sourceReserve.add(sourceCard);
+		else if(sourceReserve.getName() != targetReserve.getName()){
+			sourceReserve.add(sourceCard);
+		}
 		return false;
 	}
 	@Override
