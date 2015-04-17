@@ -35,6 +35,8 @@ public class PileToColumnMove extends Move{
 			game.updateScore(2);
 			return true;
 		}
+		
+		sourceReserve.add(sourceCard);
 		return false;
 	}
 	@Override
