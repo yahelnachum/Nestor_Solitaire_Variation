@@ -16,10 +16,12 @@ import ks.launcher.Main;
 
 public class Nestor extends Solitaire {
 
+	// entities needed
 	Deck deck;
 	Column[] columns = new Column[8];
 	Pile[] reserves = new Pile[4];
 	
+	// boundaries needed
 	ColumnView[] columnViews = new ColumnView[8];
 	PileView[] pileViews = new PileView[4];
 	IntegerView scoreView;
@@ -40,7 +42,7 @@ public class Nestor extends Solitaire {
 	/* (non-Javadoc)
 	 * @see ks.common.games.Solitaire#hasWon()
 	 * 
-	 * Returns whether or not the game has been won.
+	 * Returns whether or not the game has been won (just looks at the number of cards left on the screen).
 	 */
 	@Override
 	public boolean hasWon() {
@@ -128,7 +130,7 @@ public class Nestor extends Solitaire {
 		
 		// TODO make new algorithm for setting up deck so that no column has the same rank in it.
 		
-		// Initialize columns with cards from deck
+		// Initialize columns with cards from deck such that no column has two or more of the same rank.
 		for(int i = 0; i < columns.length; i++){
 			columns[i] = new Column("column" + i);
 			
@@ -151,6 +153,15 @@ public class Nestor extends Solitaire {
 		updateScore(0);
 	}
 	
+	/**
+	 * Checks to see if the card's rank can be found in the deck.
+	 * 
+	 * @param card The card that will be used to find an equivalent rank.
+	 * @param column The column that you are searching through
+	 * @param lastIndex The amound of cards in the column.
+	 * @return If the card's rank is equal to one of the column cards rank then it returns true.
+	 * 		   Otherwise it returns false.
+	 */
 	public boolean cardIsInColumn(Card card, Column column, int lastIndex){
 		for(int i = 0; i < lastIndex; i++){
 			if(card.sameRank(column.peek(i))){
@@ -161,10 +172,20 @@ public class Nestor extends Solitaire {
 		return false;
 	}
 	
+	/**
+	 * Takes the top card on the deck and inserts it at the bottom.
+	 * 
+	 * @param deck The deck used to look at the top card
+	 */
 	public void putTopCardAtBottomOfDeck(Deck deck){
+		// take top card off
 		Card card = deck.get();
+		
+		// get the rest of the cards off
 		deck.select(deck.count());
 		Stack stack = deck.getSelected();
+		
+		// add top card on and then add the rest of the deck ontop of it
 		deck.add(card);
 		deck.push(stack);
 	}

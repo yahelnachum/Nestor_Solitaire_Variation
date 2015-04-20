@@ -14,7 +14,12 @@ public class TestPileToPileMove extends TestCase{
 	public void testValidPileToPileMove() {
 		Nestor nestor = new Nestor();
 		GameWindow gw = Main.generateWindow(nestor, Deck.OrderByRank);
-		//gw.
+		
+		nestor.reserves[0].get();
+		nestor.reserves[1].get();
+		nestor.reserves[0].add(new Card(1, 1));
+		nestor.reserves[1].add(new Card(1, 3));
+		
 		Card card1 = nestor.reserves[0].peek();	// will be a a of spades
 		Card card2 = nestor.reserves[1].get();  // will be a a of hearts
 		

@@ -26,6 +26,11 @@ public class ColumnToPileMove extends Move{
 		this.targetReserve = targetReserve;
 	}
 	
+	/* (non-Javadoc)
+	 * @see ks.common.model.Move#doMove(ks.common.games.Solitaire)
+	 * 
+	 * Does the column to pile move if it is valid. 
+	 */
 	@Override
 	public boolean doMove(Solitaire game) {
 		if(this.valid(game)){
@@ -39,6 +44,12 @@ public class ColumnToPileMove extends Move{
 		sourceColumn.add(sourceCard);
 		return false;
 	}
+	
+	/* (non-Javadoc)
+	 * @see ks.common.model.Move#undo(ks.common.games.Solitaire)
+	 * 
+	 * Undos the effect of the move made.
+	 */
 	@Override
 	public boolean undo(Solitaire game) {
 		// return the cards to their respective pile/column
@@ -48,6 +59,12 @@ public class ColumnToPileMove extends Move{
 		game.updateScore(-2);		
 		return true;
 	}
+	
+	/* (non-Javadoc)
+	 * @see ks.common.model.Move#valid(ks.common.games.Solitaire)
+	 * 
+	 * Validates whether or not the move is allowed to be made
+	 */
 	@Override
 	public boolean valid(Solitaire game) {
 		// if the cards are of the same rank then it is a valid move

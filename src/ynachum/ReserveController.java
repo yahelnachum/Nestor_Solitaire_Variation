@@ -97,7 +97,7 @@ public class ReserveController extends SolitaireReleasedAdapter {
 			return;
 		}
 
-		/** Recover the from the Pile */
+		/** Recover the card from the Pile */
 		Widget fromWidget = c.getDragSource();
 		if (fromWidget == null) {
 			System.err.println ("ReserveController::mouseReleased(): somehow no dragSource in container.");
