@@ -9,6 +9,7 @@ import ks.client.gamefactory.GameWindow;
 import ks.common.model.Deck;
 import ks.launcher.Main;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,16 +17,24 @@ public class TestColumnController extends TestCase{
 
 	Nestor nestor;
 	GameWindow gw;
-	int sleepTime = 500;
+	int sleepTime = 100;
 	
 	@Before
 	public void setUp() throws Exception {
 		nestor = new Nestor();
 		gw = Main.generateWindow(nestor, Deck.OrderBySuit);
 	}
+	
+	/* (non-Javadoc)
+	 * @see junit.framework.TestCase#tearDown()
+	 */
+	@After
+	public void tearDown(){
+		gw.dispose();
+	}
 
 	@Test
-	public void testValidColumnController() throws AWTException, InterruptedException{
+	public void testValidColumnToPileController() throws AWTException, InterruptedException{
 		// make move
 		Robot bot = new Robot();
 		bot.setAutoDelay(sleepTime);
@@ -38,6 +47,8 @@ public class TestColumnController extends TestCase{
 	    assertEquals(nestor.columns[3].peek().getRank(), 4);
 	    assertEquals(nestor.reserves[1].count(), 0);
 	}
+	
+	// TODO add testValidColumnToColumnController
 	
 	@Test
 	public void testInvalidColumnController() throws AWTException, InterruptedException{

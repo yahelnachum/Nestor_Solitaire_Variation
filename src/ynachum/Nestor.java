@@ -3,9 +3,11 @@ package ynachum;
 import ks.common.controller.SolitaireMouseMotionAdapter;
 import ks.common.games.Solitaire;
 import ks.common.games.SolitaireUndoAdapter;
+import ks.common.model.Card;
 import ks.common.model.Column;
 import ks.common.model.Deck;
 import ks.common.model.Pile;
+import ks.common.model.Stack;
 import ks.common.view.CardImages;
 import ks.common.view.ColumnView;
 import ks.common.view.IntegerView;
@@ -121,14 +123,19 @@ public class Nestor extends Solitaire {
 	private void initializeModel(int seed) {
 		// Initialize deck
 		deck = new Deck("deck");
-		deck.create(seed);;
+		deck.create(seed);
 		model.addElement(deck);
+		
+		// TODO make new algorithm for setting up deck so that no column has the same rank in it.
 		
 		// Initialize columns with cards from deck
 		for(int i = 0; i < columns.length; i++){
 			columns[i] = new Column("column" + i);
 			
 			for(int j = 0; j < 6; j++){
+				while(cardIsInColumn(deck.peek(), columns[i], j)){
+					putTopCardAtBottomOfDeck(deck);
+				}
 				columns[i].add(deck.get());
 			}
 		}
@@ -144,10 +151,40 @@ public class Nestor extends Solitaire {
 		updateScore(0);
 	}
 	
+	public boolean cardIsInColumn(Card card, Column column, int lastIndex){
+		for(int i = 0; i < lastIndex; i++){
+			if(card.sameRank(column.peek(i))){
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	public void putTopCardAtBottomOfDeck(Deck deck){
+		Card card = deck.get();
+		deck.select(deck.count());
+		Stack stack = deck.getSelected();
+		deck.add(card);
+		deck.push(stack);
+	}
+	
 	/** Code to launch solitaire variation. */
 	public static void main (String []args) {
 		// Seed is to ensure we get the same initial cards every time.
 		// Here the seed is to "order by suit."
 		Main.generateWindow(new Nestor(), Deck.OrderBySuit);
+		
+		/*Deck deck1 = new Deck("deck");
+		deck1.create(0);
+		
+		System.out.println(deck1.peek().toString());
+		Card c = deck1.get();
+		deck1.select(deck1.count());
+		Stack s = deck1.getSelected();
+		deck1.add(c);
+		deck1.push(s);
+		System.out.println(deck1.peek());*/
+		
 	}
 }
